@@ -1,12 +1,17 @@
 import User from "../models/User.js"
 export default class UserService {
     constructor() {
-        this.users = []
-        this.id = 1
+        let stored = JSON.parse(localStorage.getItem("users"))
+        this.users = stored || []
+        this.id = this.users.length + 1
+    }
+    save() {
+        localStorage.setItem("users", JSON.stringify(this.users))
     }
     create(name, email) {
-        const user = new User(this.id++, name, email)
+        let user = new User(this.id++, name, email)
         this.users.push(user)
+        this.save()
         return user
     }
     getAll() {
@@ -17,5 +22,6 @@ export default class UserService {
     }
     delete(id) {
         this.users = this.users.filter(u => u.id !== id)
+        this.save()
     }
 }
