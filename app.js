@@ -14,19 +14,34 @@ let productService = new ProductService()
 let userService = new UserService()
 let cartService = new CartService()
 let orderService = new OrderService(cartService, productService)
-let productController = new ProductController(productService, new ProductView())
-let userController = new UserController(userService, new UserView())
+let productView = new ProductView()
+let productController =
+new ProductController(productService, productView)
+productView.controller = productController
+let userView = new UserView()
+let userController =
+new UserController(userService, userView)
+userView.controller = userController
 let cartController = new CartController(cartService, new CartView())
 let orderController = new OrderController(orderService, new OrderView())
 userController.createUser("aymen", "aymen2000@mail.com")
 userController.createUser("sikal", "sikal@mail.com")
-productController.createProduct("ps3", 1, 1)
-productController.createProduct("controller ps3", 1, 1)
-productController.createProduct("Monitor", 1, 5)
 productController.getProducts()
-cartController.addProduct(1, 2)
-cartController.addProduct(2, 1)
 cartController.showCart()
-orderController.checkout(1)
 orderController.getOrders()
 productController.getProducts()
+const btn = document.getElementById("addProduct")
+btn.addEventListener("click", () => {
+    const name = document.getElementById("name").value
+    const price = Number(document.getElementById("price").value)
+    const stock = Number(document.getElementById("stock").value)
+    productController.createProduct(name, price, stock)
+    productController.getProducts()
+})
+const addUserBtn = document.getElementById("addUser")
+addUserBtn.addEventListener("click", () => {
+    const name = document.getElementById("username").value
+    const email = document.getElementById("email").value
+    userController.createUser(name, email)
+    userController.getUsers()
+})

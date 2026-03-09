@@ -1,16 +1,23 @@
 export default class ProductView {
-    printProducts(products) {
+    constructor(controller){
+        this.controller = controller
+    }
+    printProducts(products){
+        const container = document.getElementById("products")
+        container.innerHTML = "<h2>Products</h2>"
         products.forEach(p => {
-            console.log(`${p.id} | ${p.name} | $${p.price} | stock: ${p.stock}`)
+            const div = document.createElement("div")
+            div.innerHTML = `
+            ${p.id} | ${p.name} | $${p.price} | stock: ${p.stock}
+            `
+            const btn = document.createElement("button")
+            btn.textContent = "Delete"
+            btn.addEventListener("click", () => {
+                this.controller.deleteProduct(p.id)
+                this.controller.getProducts()
+            })
+            div.appendChild(btn)
+            container.appendChild(div)
         })
-    }
-    printProductCreated(product) {
-        console.log("Product created:", product.name)
-    }
-    printProductDeleted(id) {
-        console.log("Product deleted:", id)
-    }
-    printProductError(message) {
-        console.log("Product error:", message)
     }
 }

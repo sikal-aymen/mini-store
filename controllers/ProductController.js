@@ -5,7 +5,6 @@ export default class ProductController {
     }
     createProduct(name, price, stock) {
         const product = this.service.create(name, price, stock)
-        this.view.printProductCreated(product)
     }
     getProducts() {
         const products = this.service.getAll()
@@ -13,6 +12,5 @@ export default class ProductController {
     }
     deleteProduct(id) {
         this.service.delete(id)
-        this.view.printProductDeleted(id)
     }
 }
