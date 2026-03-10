@@ -1,27 +1,30 @@
-import User from "../models/User.js"
 export default class UserService {
-    constructor() {
-        let stored = JSON.parse(localStorage.getItem("users"))
-        this.users = stored || []
-        this.id = this.users.length + 1
+    constructor(){
+        this.users =
+        JSON.parse(localStorage.getItem("users")) || []
     }
-    save() {
-        localStorage.setItem("users", JSON.stringify(this.users))
+    save(){
+        localStorage.setItem(
+            "users",
+            JSON.stringify(this.users)
+        )
     }
-    create(name, email) {
-        let user = new User(this.id++, name, email)
+    create(name,email){
+        const user = {
+            id: this.users.length + 1,
+            name,
+            email
+        }
         this.users.push(user)
         this.save()
         return user
     }
-    getAll() {
+    getAll(){
         return this.users
     }
-    getById(id) {
-        return this.users.find(u => u.id === id)
-    }
-    delete(id) {
-        this.users = this.users.filter(u => u.id !== id)
+    delete(id){
+        this.users =
+        this.users.filter(u => u.id !== id)
         this.save()
     }
 }
