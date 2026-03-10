@@ -4,12 +4,7 @@ export default class OrderController {
         this.view = view
     }
     checkout(userId) {
-        try {
-            const order = this.orderService.checkout(userId)
-            this.view.printOrderSuccess(order)
-        } catch (e) {
-            this.view.printOrderError(e.message)
-        }
+        this.orderService.checkout(userId)
     }
     getOrders() {
         const orders = this.orderService.getOrders()

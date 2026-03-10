@@ -22,7 +22,8 @@ export default class OrderService {
             if (!product || product.stock < item.quantity) {
                 throw new Error("Stock problem")
             }
-            total += product.price * item.quantity
+            total += product.price * item.quantity;
+            
             product.stock -= item.quantity
             products.push(item)
         }
